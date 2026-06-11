@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/config.ts","./src/main.tsx","./src/vite-env.d.ts","./src/components/confetti.tsx","./src/components/heartfield.tsx","./src/hooks/usetilt.ts","./src/hooks/usetypewriter.ts","./src/lib/sound.ts","./src/scenes/cakescene.tsx","./src/scenes/finalescene.tsx","./src/scenes/introscene.tsx","./src/scenes/letterscene.tsx"],"version":"5.9.3"}
