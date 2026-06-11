@@ -828,6 +828,87 @@ body {
   margin-top: 0.4rem;
 }
 
+/* ── LETTER TWO-COLUMN LAYOUT ── */
+.letter-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  transition: gap 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.letter-layout--typing {
+  gap: 2rem;
+}
+
+.letter-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.letter-left .letter-card {
+  width: min(500px, 100%);
+  flex: 1;
+}
+
+/* right panel starts at zero width — card stays centered */
+.letter-right {
+  flex: 0 0 0px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  opacity: 0;
+  pointer-events: none;
+  transition: flex-basis 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* when typing starts, panel expands and image pops in */
+.letter-right--visible {
+  flex-basis: clamp(240px, 36%, 320px);
+  overflow: visible;
+  pointer-events: auto;
+  animation: letter-img-pop 0.9s 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes letter-img-pop {
+  0%   { opacity: 0; transform: scale(0.45) translateX(55px); }
+  62%  { opacity: 1; transform: scale(1.06) translateX(-5px); }
+  80%  { transform: scale(0.97) translateX(2px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+
+.letter-img-card {
+  flex: 1;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 182, 193, 0.22);
+  border-radius: 24px;
+  padding: 1.6rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(255, 238, 247, 0.08) inset,
+    0 8px 32px -8px rgba(255, 20, 147, 0.28);
+}
+
+.letter-img-card svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 660px) {
+  .letter-right {
+    display: none;
+  }
+}
+
 /* ============================================================
    FINALE
    ============================================================ */

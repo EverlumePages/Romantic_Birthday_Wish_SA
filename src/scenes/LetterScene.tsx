@@ -3,6 +3,7 @@ import { config } from '../config'
 import { sound } from '../lib/sound'
 import { useTypewriter } from '../hooks/useTypewriter'
 import { useTilt } from '../hooks/useTilt'
+import LetterImage from '../components/LetterImage'
 
 interface Props {
   onNext: () => void
@@ -29,34 +30,46 @@ export default function LetterScene({ onNext }: Props) {
     },
   })
 
+  const typing = counts.some(c => c > 0)
+
   return (
     <div className="scene">
       <p className="eyebrow">a letter for you</p>
 
-      <div
-        ref={tilt.ref}
-        onPointerMove={tilt.onPointerMove}
-        onPointerLeave={tilt.onPointerLeave}
-        className="card letter-card"
-      >
-        <div className="letter-greeting">Dear {config.herName},</div>
+      <div className={`letter-layout${typing ? ' letter-layout--typing' : ''}`}>
+        <div className="letter-left">
+          <div
+            ref={tilt.ref}
+            onPointerMove={tilt.onPointerMove}
+            onPointerLeave={tilt.onPointerLeave}
+            className="card letter-card"
+          >
+            <div className="letter-greeting">Dear {config.herName},</div>
 
-        <div className="letter-scroll" ref={scrollRef}>
-          {config.letter.map((para, i) => {
-            const shown = counts[i] ?? 0
-            if (shown === 0 && (i === 0 ? false : (counts[i - 1] ?? 0) < config.letter[i - 1].length)) {
-              return null
-            }
-            const isActive = shown > 0 && shown < para.length
-            return (
-              <p className="letter-p" key={i}>
-                {para.slice(0, shown)}
-                {isActive && <span className="caret" />}
-              </p>
-            )
-          })}
+            <div className="letter-scroll" ref={scrollRef}>
+              {config.letter.map((para, i) => {
+                const shown = counts[i] ?? 0
+                if (shown === 0 && (i === 0 ? false : (counts[i - 1] ?? 0) < config.letter[i - 1].length)) {
+                  return null
+                }
+                const isActive = shown > 0 && shown < para.length
+                return (
+                  <p className="letter-p" key={i}>
+                    {para.slice(0, shown)}
+                    {isActive && <span className="caret" />}
+                  </p>
+                )
+              })}
 
-          {done && <div className="letter-sign">{config.fromName} ♥</div>}
+              {done && <div className="letter-sign">{config.fromName} ♥</div>}
+            </div>
+          </div>
+        </div>
+
+        <div className={`letter-right${typing ? ' letter-right--visible' : ''}`}>
+          <div className="letter-img-card">
+            <LetterImage />
+          </div>
         </div>
       </div>
 
